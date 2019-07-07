@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <!-- ************* Data Connector search View  *************** -->
+        <record id="elvenstudio_data_connector_search_view" model="ir.ui.view">
+            <field name="name">elvenstudio.data.connector.search.view</field>
+            <field name="model">elvenstudio.data.connector</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Filter">
+                    <field name="impacted_model" />
+                    <field name="command" />
+                    <field name="state" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                </search>
+            </field>
+        </record>
+
+        <!-- ************* Data Connector Tree View  *************** -->
+        <record id="elvenstudio_data_connector_tree_view" model="ir.ui.view">
+            <field name="name">elvenstudio.data.connector.tree.view</field>
+            <field name="model">elvenstudio.data.connector</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Tasks"
+                      colors="blue:state == 'draft';green:state =='done';red:state == 'cancel' or state == 'error'">
+                    <field name="impacted_model" />
+                    <field name="command" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="duration" />
+                    <field name="message" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- ************* Data Connector form View  *************** -->
+        <record id="elvenstudio_data_connector_form_view" model="ir.ui.view">
+            <field name="name">elvenstudio.data.connector.form.view</field>
+            <field name="model">elvenstudio.data.connector</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="File Load">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in-progress,done" />
+                    </header>
+                    <h2><field name="command" /></h2>
+                    <group>
+                        <field name="impacted_model" />
+                        <field name="duration" />
+                        <field name="start_date" string="Task started at" />
+                        <field name="end_date" string="Task ended at" />
+                        <field name="message" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_data_connector" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="res_model">elvenstudio.data.connector</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Definisco la voce per il plugin nel pannello di controllo -->
+        <menuitem  id="menu_performed_operation"
+                   name="Tasks"
+                   parent="elvenstudio_control_panel.es_main_menu"
+                   sequence="3"/>
+
+				<!-- Definisco la view di default quando si accede alla voce di menu del plugin -->
+				<menuitem  id="cp_perf_op"
+                           name="Tasks"
+                           parent="menu_performed_operation"
+                           action="action_data_connector"/>
+    </data>
+</openerp>
